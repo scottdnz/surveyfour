@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block domainBody %}
+
+<div id="appUserAdmin">
+	<!-- <h1>User Admin</h1>
+	<h2>Test routes</h2> -->
+	
+	<br>
+ 	<nav class="navbar navbar-light bg-light navbar-expand-lg">
+		<!-- <router-link to="/user-admin">User Admin</router-link> -->
+		<router-link to="/user-entry" class="nav-item nav-link">User Entry</router-link>
+		<router-link to="/user-list" class="nav-item nav-link">User List</router-link>
+	</nav>
+
+	<router-view></router-view>
+
+</div>
+
+<script src="./js/dist/bundle_userAdmin.js"></script>
+
+		<!-- <script src="./js/dist/bundle.js"></script> -->
+{% endblock %}

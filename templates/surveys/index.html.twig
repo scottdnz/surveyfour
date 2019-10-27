@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block domainBody %}
+
+<div id="appSurveys">
+	<br>
+ 	<nav class="navbar navbar-light bg-light navbar-expand-lg">
+		<!-- <router-link to="/user-admin">User Admin</router-link> -->
+		<router-link to="/survey-entry" class="nav-item nav-link">Create Survey</router-link>
+		<router-link to="/survey-list" class="nav-item nav-link">Surveys List</router-link>
+	</nav>
+
+	<router-view></router-view>
+
+</div>
+
+<script src="./js/dist/bundle_surveys.js"></script>
+
+<!-- <script src="./js/dist/bundle.js"></script> -->
+{% endblock %}
