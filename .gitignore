@@ -2,6 +2,8 @@
 ###> symfony/framework-bundle ###
 /.env
 /public/bundles/
+/public/bundles/node_modules/
+/public/bundles/js/dist/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###

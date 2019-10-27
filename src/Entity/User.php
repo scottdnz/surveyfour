@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,49 +19,60 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=120)
      */
     private $FirstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $LastName;
+    private $MiddleNames;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=160)
+     */
+    private $LastName;
+
+     /**
+     * @ORM\Column(type="string", length=160, nullable=true)
      */
     private $Email;
 
     /**
-     * @ORM\Column(type="string", length=24, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $Phone;
+    private $PhoneMobile;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $AddressStreet;
-
-    /**
-     * @ORM\Column(type="string", length=120, nullable=true)
-     */
-    private $AddressSuburb;
+    private $PhoneLandline;
 
     /**
      * @ORM\Column(type="string", length=120, nullable=true)
      */
-    private $AddressCity;
+    private $Title;
 
     /**
-     * @ORM\Column(type="string", length=120, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Address", inversedBy="users")
      */
-    private $AddressRegion;
+    private $Address;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\SurveyCreator", mappedBy="User")
      */
-    private $AddressPostcode;
+    private $surveyCreators;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant", mappedBy="User")
+     */
+    private $participants;
+
+    public function __construct()
+    {
+        $this->surveyCreators = new ArrayCollection();
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,12 +91,24 @@ class User
         return $this;
     }
 
+    public function getMiddleNames(): ?string
+    {
+        return $this->MiddleNames;
+    }
+
+    public function setMiddleNames(?string $MiddleNames): self
+    {
+        $this->MiddleNames = $MiddleNames;
+
+        return $this;
+    }
+
     public function getLastName(): ?string
     {
         return $this->LastName;
     }
 
-    public function setLastName(?string $LastName): self
+    public function setLastName(string $LastName): self
     {
         $this->LastName = $LastName;
 
@@ -95,81 +120,119 @@ class User
         return $this->Email;
     }
 
-    public function setEmail(?string $Email): self
+    public function setEmail(string $Email): self
     {
         $this->Email = $Email;
 
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getPhoneMobile(): ?string
     {
-        return $this->Phone;
+        return $this->PhoneMobile;
     }
 
-    public function setPhone(?string $Phone): self
+    public function setPhoneMobile(?string $PhoneMobile): self
     {
-        $this->Phone = $Phone;
+        $this->PhoneMobile = $PhoneMobile;
 
         return $this;
     }
 
-    public function getAddressStreet(): ?string
+    public function getPhoneLandline(): ?string
     {
-        return $this->AddressStreet;
+        return $this->PhoneLandline;
     }
 
-    public function setAddressStreet(?string $AddressStreet): self
+    public function setPhoneLandline(?string $PhoneLandline): self
     {
-        $this->AddressStreet = $AddressStreet;
+        $this->PhoneLandline = $PhoneLandline;
 
         return $this;
     }
 
-    public function getAddressSuburb(): ?string
+    public function getTitle(): ?string
     {
-        return $this->AddressSuburb;
+        return $this->Title;
     }
 
-    public function setAddressSuburb(?string $AddressSuburb): self
+    public function setTitle(?string $Title): self
     {
-        $this->AddressSuburb = $AddressSuburb;
+        $this->Title = $Title;
 
         return $this;
     }
 
-    public function getAddressCity(): ?string
+    public function getAddress(): ?Address
     {
-        return $this->AddressCity;
+        return $this->Address;
     }
 
-    public function setAddressCity(?string $AddressCity): self
+    public function setAddress(?Address $Address): self
     {
-        $this->AddressCity = $AddressCity;
+        $this->Address = $Address;
 
         return $this;
     }
 
-    public function getAddressRegion(): ?string
+    /**
+     * @return Collection|SurveyCreator[]
+     */
+    public function getSurveyCreators(): Collection
     {
-        return $this->AddressRegion;
+        return $this->surveyCreators;
     }
 
-    public function setAddressRegion(?string $AddressRegion): self
+    public function addSurveyCreator(SurveyCreator $surveyCreator): self
     {
-        $this->AddressRegion = $AddressRegion;
+        if (!$this->surveyCreators->contains($surveyCreator)) {
+            $this->surveyCreators[] = $surveyCreator;
+            $surveyCreator->setUser($this);
+        }
 
         return $this;
     }
 
-    public function getAddressPostcode(): ?string
+    public function removeSurveyCreator(SurveyCreator $surveyCreator): self
     {
-        return $this->AddressPostcode;
+        if ($this->surveyCreators->contains($surveyCreator)) {
+            $this->surveyCreators->removeElement($surveyCreator);
+            // set the owning side to null (unless already changed)
+            if ($surveyCreator->getUser() === $this) {
+                $surveyCreator->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setAddressPostcode(?string $AddressPostcode): self
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
     {
-        $this->AddressPostcode = $AddressPostcode;
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->contains($participant)) {
+            $this->participants->removeElement($participant);
+            // set the owning side to null (unless already changed)
+            if ($participant->getUser() === $this) {
+                $participant->setUser(null);
+            }
+        }
 
         return $this;
     }

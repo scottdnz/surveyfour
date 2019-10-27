@@ -1,12 +1,26 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+	<head>
+		<meta charset="UTF-8">	
+		<link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}" />
+		<link rel="stylesheet" href="{{ asset('css/forms.css') }}" />
+	</head>
+
+	<body>
+
+		<div class="container">
+			<h1>SurveyFour</h1>
+			 
+			 <nav class="navbar navbar-light bg-light navbar-expand-lg">
+			 	<a class="nav-item nav-link" href="/">Home</a>
+				<a class="nav-item nav-link" href="/user">User Admin</a>
+				<a class="nav-item nav-link" href="/survey">Surveys</a>
+			</nav>
+
+
+			{% block domainBody %}{% endblock %}
+        <!-- {% block javascripts %}{% endblock %} -->
+
+		<!-- <script src="./js/dist/bundle.js"></script> -->
+		</div>
+	</body>
 </html>
