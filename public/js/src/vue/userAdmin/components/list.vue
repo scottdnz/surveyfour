@@ -41,7 +41,7 @@ export default {
 	props: ["Axios"], //, "AdderService"],
 	methods: {
 		getUsersList: function() {
-			let url = "user/list";
+			let url = "/survey4/user/list";
 
 			let self = this;
 			self.Axios.get(url)

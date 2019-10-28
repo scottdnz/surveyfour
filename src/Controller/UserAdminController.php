@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
-// use Doctrine\DBAL\Driver\Connection;
+use Doctrine\DBAL\Driver\Connection;
 use Symfony\Component\Yaml\Yaml;
 
 class UserAdminController extends AbstractController
@@ -55,7 +55,7 @@ class UserAdminController extends AbstractController
     	$status = "ok";
     	$users = [];
     	try {
-			$users = $userRepo->listAll(); // listAll();
+			$users = $userRepo->listAll(); 
 		}
 		catch (Exception $e) {
 			$status = $e->getMessage();
@@ -78,10 +78,12 @@ class UserAdminController extends AbstractController
     public function default()
     {
         // Hacky config for now. Replace me
-        $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
-        $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
+        // $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
+        // $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
         return $this->render("userAdmin/index.html.twig", 
-             ["subfolderAlias" => $subfolderAlias]
+             [
+                // "subfolderAlias" => $subfolderAlias
+            ]
         );
     }
 
@@ -95,7 +97,9 @@ class UserAdminController extends AbstractController
         $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
         $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
         return $this->render("userAdmin/index.html.twig", 
-             ["subfolderAlias" => $subfolderAlias]
+             [
+                // "subfolderAlias" => $subfolderAlias
+            ]
         );
     }    
 
