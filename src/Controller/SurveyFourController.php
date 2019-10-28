@@ -13,7 +13,7 @@ class SurveyFourController extends AbstractController
 {
     /**
      * Returns HTML template
-     * @Route("/", name="SurveyFourDefault")
+     * @Route("/", name="surveyFourDefault")
      */
     public function default()
     {

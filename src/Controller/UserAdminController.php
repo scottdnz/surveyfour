@@ -16,7 +16,7 @@ class UserAdminController extends AbstractController
 
 	/**
      * API call
-     * @Route("/user/insert", name="user-insert", methods={"POST", "GET"})
+     * @Route("/user/insert", name="userInsert", methods={"POST", "GET"})
      */
     public function insert(Request $request, UserRepository $userRepo)
     {   
@@ -48,7 +48,7 @@ class UserAdminController extends AbstractController
 
     /**
      * API call
-     * @Route("/user/list", name="user_list", methods={"GET"})
+     * @Route("/user/list", name="userList", methods={"GET"})
      */
     public function list(UserRepository $userRepo) {
     	$status = "ok";
