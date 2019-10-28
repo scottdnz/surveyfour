@@ -22,7 +22,8 @@ class SurveyFourController extends AbstractController
         $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
         $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
         return $this->render("indexSurveyFour.html.twig", 
-            ["subfolderAlias" => $subfolderAlias]
+            ["subfolderAlias" => $subfolderAlias, 
+            "customConfig" => print_r($customConfig)]
         );
     }
 
