@@ -85,4 +85,19 @@ class UserAdminController extends AbstractController
         );
     }
 
+     /**
+     * Returns HTML template
+     * @Route("/surveyfour/user", name="userAdminDefaultSubfolder")
+     */
+    public function defaultSubfolder()
+    {
+        // Hacky config for now. Replace me
+        $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
+        $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
+        return $this->render("userAdmin/index.html.twig", 
+             ["subfolderAlias" => $subfolderAlias]
+        );
+    }    
+
+
 }
