@@ -7,25 +7,24 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
-// use App\Entity\User;
-// use App\Repository\UserRepository;
-// use Doctrine\DBAL\Driver\Connection;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Dotenv\Dotenv;
 
 class SurveysController extends AbstractController
 {
 	/**
      * Returns HTML template
      * @Route("/survey", name="surveysDefault")
+     * @Route("/survey4/survey", name="surveysDefaultSubfolder")
      */
     public function default()
     {
-        // Hacky config for now. Replace me
-        // $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
-        // $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
+       $dotenv = new Dotenv();
+        $dotenv->loadEnv(__DIR__.'/../../.env');
+        $subfolderAlias = $_ENV["APP_ENV_READABLE"] === "dev" ? "" : $_ENV["SUBFOLDER_ALIAS"];
+
         return $this->render("surveys/index.html.twig", 
              [
-                // "subfolderAlias" => $subfolderAlias
+                "subfolderAlias" => $subfolderAlias
             ]
         );
     }

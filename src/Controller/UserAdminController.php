@@ -10,7 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Driver\Connection;
-use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Dotenv\Dotenv;
+
 
 class UserAdminController extends AbstractController
 {
@@ -18,6 +19,7 @@ class UserAdminController extends AbstractController
 	/**
      * API call
      * @Route("/user/insert", name="userInsert", methods={"POST", "GET"})
+     * @Route("/survey4/user/insert", name="userInsertSubfolder", methods={"POST", "GET"})
      */
     public function insert(Request $request, UserRepository $userRepo)
     {   
@@ -26,8 +28,6 @@ class UserAdminController extends AbstractController
     	    $request->getContent(),
             true
         );
-
-
 
 		try {
 			$userRepo->insertOne($userData);
@@ -46,10 +46,10 @@ class UserAdminController extends AbstractController
         );
     }
 
-
     /**
      * API call
      * @Route("/user/list", name="userList", methods={"GET"})
+     * @Route("/survey4/user/list", name="userListSubfolder", methods={"GET"})
      */
     public function list(UserRepository $userRepo) {
     	$status = "ok";
@@ -68,40 +68,24 @@ class UserAdminController extends AbstractController
             ]
             // JsonResponse::HTTP_CREATED
         );
-
     }
 
-     /**
+    /**
      * Returns HTML template
      * @Route("/user", name="userAdminDefault")
-     */
-    public function default()
-    {
-        // Hacky config for now. Replace me
-        // $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
-        // $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
-        return $this->render("userAdmin/index.html.twig", 
-             [
-                // "subfolderAlias" => $subfolderAlias
-            ]
-        );
-    }
-
-     /**
-     * Returns HTML template
-     * @Route("/surveyfour/user", name="userAdminDefaultSubfolder")
+     * @Route("/survey4/user", name="userAdminDefaultSubfolder")
      */
     public function defaultSubfolder()
     {
-        // Hacky config for now. Replace me
-        $customConfig = Yaml::parseFile(__DIR__.'/../../config/custom.yaml', Yaml::PARSE_OBJECT_FOR_MAP);
-        $subfolderAlias = $customConfig->urls->using_subfolder ? $customConfig->urls->subfolder_alias : "";
+        $dotenv = new Dotenv();
+        $dotenv->loadEnv(__DIR__.'/../../.env');
+        $subfolderAlias = $_ENV["APP_ENV_READABLE"] === "dev" ? "" : $_ENV["SUBFOLDER_ALIAS"];
+        
         return $this->render("userAdmin/index.html.twig", 
              [
-                // "subfolderAlias" => $subfolderAlias
+                "subfolderAlias" => $subfolderAlias
             ]
         );
     }    
-
 
 }
