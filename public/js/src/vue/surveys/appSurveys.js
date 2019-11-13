@@ -1,6 +1,7 @@
 const Vue = require('vue/dist/vue.js'); 
 const Axios = require("axios/dist/axios.js");
 const VueRouter = require("vue-router/dist/vue-router.js");
+const Moment = require("moment/min/moment.min.js");
 Vue.use(VueRouter);
 // const AdderService = require("./services/AdderService.js");
 
@@ -13,6 +14,7 @@ const routes = [
   { path: '/survey-entry', 
   	component: surveyEntryTemplate, 
   	props: {Axios: Axios, //pass Axios as a property to the child component (template)
+      Moment: Moment
   		// AdderService: AdderService
   	} 
   },

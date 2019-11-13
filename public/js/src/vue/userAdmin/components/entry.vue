@@ -90,7 +90,6 @@
 export default {
   data () {
     return {
-		msg: "Hello world 4!",
 		iptTitle: '',
 		iptFirstName: '',
 		iptMiddleNames: '',
@@ -102,7 +101,7 @@ export default {
      
     }
   },
-  props: ["Axios"], //, "$http"], //, "AdderService"],
+  props: ["Axios"], //, "AdderService"],
   methods: {
 	newUserFormSubmit: function() {
 		let reqData = {
