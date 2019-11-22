@@ -19,7 +19,7 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function insertOne($user) {
+     public function insertOne($user) {
          $newUser = new User();
          $newUser->setTitle($user["title"]);
          $newUser->setFirstName($user["first_name"]);
@@ -52,15 +52,6 @@ class UserRepository extends ServiceEntityRepository
 
         return $usersJson;
     }
-
-    //     $em = $this->getEntityManager();
-    //     ->getRepository('Product')
-    //     return $this->findAll();
-    //     // return $this->createQueryBuilder('u')
-    //     //     ->getQuery()
-    //     //     ->getResult()
-    //     // ;
-    // }
 
     // /**
     //  * @return User[] Returns an array of User objects

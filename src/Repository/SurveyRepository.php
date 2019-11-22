@@ -19,6 +19,22 @@ class SurveyRepository extends ServiceEntityRepository
         parent::__construct($registry, Survey::class);
     }
 
+    public function insertSurveyInitial($user) {
+         $newSurvey = new Survey();
+         $newSurvey->setName($survey["name"]);
+         $newSurvey->setCreated($survey["created"]);
+         $newSurvey->setIssuedActive($survey["issued_active"]);
+         $newSurvey->setMinutesAllowed($survey["minutes_allowed"]);
+         $newSurvey->setName($survey["date_open"]);
+         $newSurvey->setName($survey["date_close"]);
+         $newSurvey->setName($survey["survey_creator"]);
+
+         $em = $this->getEntityManager();
+         $em->persist($newSurvey);
+         $em->flush();
+    }
+
+
     // /**
     //  * @return Survey[] Returns an array of Survey objects
     //  */
